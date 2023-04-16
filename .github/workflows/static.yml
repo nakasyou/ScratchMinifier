@@ -39,7 +39,7 @@ jobs:
       - name: Install deps
         run: npm i
       - name: build by vite
-        run: vite build
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
