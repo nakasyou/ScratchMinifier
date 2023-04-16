@@ -191,7 +191,7 @@ async function jsonMinify(project,subdata){
     const { variables, lists, blocks, costumes } = sprite;
     // costumes
     for(const costume of costumes){
-      costume.name = ids.get("costumes");
+      //costume.name = ids.get("costumes");
       if(costume.md5ext in tocostume && options.svg2png){
         Object.assign(costume,tocostume[costume.md5ext]);
       }
