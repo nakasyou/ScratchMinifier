@@ -1,3 +1,4 @@
+import './style.css';
 document.getElementById("minify").addEventListener("click",(e)=>{
   for(const element of document.getElementsByClassName("info")){
     element.textContent = "None";
