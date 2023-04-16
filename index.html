@@ -1,0 +1,64 @@
+<!doctype html>
+ 
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
+    <title>${title}</title>
+    <meta name="description" content="${description}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/lib-typedarrays.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/md5.js"></script>
+  </head>
+  <body>
+    <h1>Scratch Minifyer</h1>
+    <div>
+      <input type="file" id="open-sb3">
+    </div>
+    <div>
+      <button class="btn" id="minify">Minify!</button>
+      <span id="download"></span>
+    </div>
+    <div>
+      <span id="raw-size" class="info">None</span> Bytes
+      <span>→</span>
+      <span id="min-size" class="info">None</span> Bytes
+      <span>(<span id="ratio" class="info">None</span>% minifyed)</span>
+    </div>
+    <div style="display: flex; flex-wrap: wrap;" id="options">
+      <div>
+        <input type="checkbox" id="removeVarValue">
+        <label for="removeVarValue">変数の中身を削除する</label>
+      </div>
+      <div>
+        <input type="checkbox" id="removeListValue">
+        <label for="removeListValue">リストの中身を削除する</label>
+      </div>
+      <div>
+        <input type="checkbox" id="removeNotConnectBlocks" checked>
+        <label for="removeNotConnectBlocks">接続されていないブロックを削除する</label>
+      </div>
+      <div>
+        <input type="checkbox" id="svg2png" checked>
+        <label for="svg2png">軽量化可能の場合ではビットマップにする</label>
+      </div>
+      <div>
+        <input type="checkbox" id="removeComment" checked>
+        <label for="removeComment">コメントの削除</label>
+      </div>
+    </div>
+    <div id="minifying" hidden>
+      <div class="btn">Minifying now...</div>
+      <div>時間がかかる場合があります</div>
+    </div>
+    <div>
+      Credits:
+      <a href="https://ukyo.github.io/jsziptools/">JSZipTools</a>
+      <a href="https://github.com/brix/crypto-js">Crypto-js</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jsziptools@3.0.0-rc4/jsziptools.min.js" integrity="sha256-xCXdllu/DhkCvyEs1RoK2gj5kr3fOZTuHu9D91fvPtQ=" crossorigin="anonymous"></script>
+  </body>
+</html>
+
