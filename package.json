@@ -1,0 +1,23 @@
+{
+  "name": "scratchminifyer",
+  "version": "1.0.0",
+  "description": "Scratch project file(.sb3) minifyer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nakasyou/ScratchMinifyer.git"
+  },
+  "author": "nakasyou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nakasyou/ScratchMinifyer/issues"
+  },
+  "homepage": "https://github.com/nakasyou/ScratchMinifyer#readme",
+  "dependencies": {
+    "typescript": "^5.0.4",
+    "vite": "^4.2.1"
+  }
+}
