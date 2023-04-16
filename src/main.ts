@@ -1,5 +1,3 @@
-import './style.css';
-
 document.getElementById("minify").addEventListener("click",(e)=>{
   for(const element of document.getElementsByClassName("info")){
     element.textContent = "None";
@@ -17,17 +15,26 @@ document.getElementById("minify").addEventListener("click",(e)=>{
   });
 
 });
+const $whatAreYouDoing = document.getElementById("what-are-you-doing");
+
 function main(sb3){
-  return new Promise((resolve)=>{jz.zip.unpack({
+  return new Promise((resolve)=>{
+    $whatAreYouDoing.textContent = "解凍中";
+    document.getElementById("minify-progress").hidden = true;
+    jz.zip.unpack({
       buffer: sb3,
       encoding: 'UTF_8',
     })
     .then(async reader=>{
+      $whatAreYouDoing.textContent = "解析中";
       document.getElementById("raw-size").textContent = reader.blob.size;
       const blobs = await Promise.all(reader.getFileNames().map(file=>reader.readFileAsBlob(file)));
       const names = reader.getFileNames();
       const result = {};
       names.forEach((name,index)=>{result[name]=blobs[index]});
+      $whatAreYouDoing.textContent = "削減中";
+      document.getElementById("minify-progress").hidden = false;
+      document.getElementById("minify-progress").value = 0;
       return result;
     })
     .then(minify)
@@ -103,6 +110,8 @@ function blob2md5(blob){
   });
 }
 async function minify(data){
+  const max = getMax(JSON.parse(await data["project.json"].text()))
+  document.getElementById("minify-progress").max = max;
   const tocostume = {};
   if(getoptions("svg2png")){
   for(const name of Object.keys(data)){
@@ -172,7 +181,20 @@ function removeBlock(blocks,id){
     }
   }
 }
+function getMax(project){
+  let result = 0;
+  project.targets.forEach(target=>{
+    result += Object.keys(target.variables).length;
+    result += Object.keys(target.blocks).length;
+  })
+  return result;
+}
 async function jsonMinify(project,subdata){
+  const $progress = document.getElementById("minify-progress");
+  const upProgress = ()=>{
+    $progress.value++;
+    $progress.textContent = $progress.value +" / "+ $progress.max;
+  };
   const { tocostume } = subdata;
   const data = JSON.parse(await project.text());
   const ids = new Ids();
@@ -198,6 +220,7 @@ async function jsonMinify(project,subdata){
     }
     // variables
     for(const id of Object.keys(variables)){
+      upProgress();
       variables[id][0] = ids.get("variables");
       if(options.removeVarValue)
         variables[id][1] = "";
@@ -210,6 +233,7 @@ async function jsonMinify(project,subdata){
     }
     // blocks
     for(const id of Object.keys(blocks)){
+      upProgress()
       const block = blocks[id];
       if(!block){
         continue;
@@ -230,8 +254,7 @@ async function jsonMinify(project,subdata){
     if(options.removeComment){
       sprite.comments = {};
     }
-    console.log(sprite)
+    //console.log(sprite)
   });
   return new Blob([JSON.stringify(data)], { type: "application/json" });
 }
-
