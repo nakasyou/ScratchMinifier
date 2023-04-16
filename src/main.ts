@@ -218,9 +218,9 @@ async function jsonMinify(project,subdata){
         block.x = 0;
         block.y = 0;
       }
-      if("mutation" in block){
+      /*if("mutation" in block){
         block.mutation.proccode = ids.getFromId("defines",block.mutation.proccode);
-      }
+      }*/
       if(block.topLevel && !block.next && options.removeNotConnectBlocks){
         removeBlock(blocks,id);
         continue;
