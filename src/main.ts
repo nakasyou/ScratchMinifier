@@ -97,12 +97,7 @@ import svg2png from "./utils/svg2png.ts";
     });
     img.onload = loaded;
     img.src = URL.createObjectURL(svgBlob);
-    /*const loadInterval = setInterval(()=>{
-      if(img.complete){
-        loaded();
-        clearInterval(loadInterval);
-      }
-    },10)*/
+
   });
 }*/
 function blob2md5(blob){
