@@ -75,38 +75,8 @@ function main(sb3){
   });
 }
 import svg2png from "./utils/svg2png.ts";
+import blob2md5 from "./utils/blob2md5.ts";
 
-/*function svg2png(svgBlob){
-  const img = new Image();
-  return new Promise((resolve)=>{
-    const loaded = () => {
-      const canvas = document.createElement('canvas');
-      
-      canvas.width = img.width;
-      canvas.height = img.height;
-
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, img.width, img.height);
-      const dataURL = canvas.toDataURL('image/png');
-      fetch(dataURL)
-      .then(res=>res.blob())
-      .then(resolve);
-    };
-    svgBlob = new Blob([svgBlob],{
-      type: "image/svg+xml",
-    });
-    img.onload = loaded;
-    img.src = URL.createObjectURL(svgBlob);
-
-  });
-}*/
-function blob2md5(blob){
-  return new Promise((resolve)=>{
-    const reader = new FileReader();
-    reader.readAsBinaryString(blob);
-    reader.onloadend = ()=>resolve(CryptoJS.MD5(reader.result).toString());
-  });
-}
 async function minify(data){
   const max = getMax(JSON.parse(await data["project.json"].text()))
   document.getElementById("minify-progress").max = max;
