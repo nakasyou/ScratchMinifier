@@ -13,7 +13,19 @@ document.getElementById("minify").addEventListener("click",(e)=>{
   main(document.getElementById("open-sb3").files[0],(data)=>{
     const $whatAreYouDoing = document.getElementById("what-are-you-doing");
     if("whatAreYouDoing" in data){
-      $whatAreYouDoing.textContent = data.whatAreYouDoing;
+      switch(data.whatAreYouDoing){
+        case "unzip":
+          break;
+        case "analysis":
+          break;
+        case "minify":
+          document.getElementById("minify-progress").hidden = false;
+          document.getElementById("minify-progress").value = 0;
+          break;
+        default:
+          break;
+      }
+      $whatAreYouDoing.textContent = data.whatAreYouDoing+"ing...";
     }
   })
   .then(()=>{
@@ -25,22 +37,20 @@ const $whatAreYouDoing = document.getElementById("what-are-you-doing");
 
 function main(sb3,callback){
   return new Promise((resolve)=>{
-    callback({whatAreYouDoing: "解凍中"})
+    callback({whatAreYouDoing: "unzip"})
     document.getElementById("minify-progress").hidden = true;
     jz.zip.unpack({
       buffer: sb3,
       encoding: 'UTF_8',
     })
     .then(async reader=>{
-      callback({whatAreYouDoing: "解析中"})
+      callback({whatAreYouDoing: "analysis"})
       document.getElementById("raw-size").textContent = reader.blob.size;
       const blobs = await Promise.all(reader.getFileNames().map(file=>reader.readFileAsBlob(file)));
       const names = reader.getFileNames();
       const result = {};
       names.forEach((name,index)=>{result[name]=blobs[index]});
-      callback({whatAreYouDoing: "削減中"})
-      document.getElementById("minify-progress").hidden = false;
-      document.getElementById("minify-progress").value = 0;
+      callback({whatAreYouDoing: "minify"})
       return result;
     })
     .then(minify)
