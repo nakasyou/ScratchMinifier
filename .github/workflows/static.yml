@@ -36,8 +36,18 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
+      - uses: actions/cache@v3
+        id: node_modules_cache_id
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      - run: echo '${{ toJSON(steps.node_modules_cache_id.outputs) }}'
       - name: Install deps
-        run: npm i
+        if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
+        run: npm install
+      - run: npm ls --depth=0
       - name: build by vite
         run: npm run build
       - name: Setup Pages
