@@ -74,7 +74,9 @@ function main(sb3){
     });
   });
 }
-function svg2png(svgBlob){
+import svg2png from "./utils/svg2png.ts";
+
+/*function svg2png(svgBlob){
   const img = new Image();
   return new Promise((resolve)=>{
     const loaded = () => {
@@ -102,7 +104,7 @@ function svg2png(svgBlob){
       }
     },10)*/
   });
-}
+}*/
 function blob2md5(blob){
   return new Promise((resolve)=>{
     const reader = new FileReader();
