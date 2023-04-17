@@ -27,6 +27,9 @@ document.getElementById("minify").addEventListener("click",(e)=>{
       }
       $whatAreYouDoing.textContent = data.whatAreYouDoing+"ing...";
     }
+    if("result" in data){
+      
+    }
   })
   .then(()=>{
     document.getElementById("minifying").hidden = true;
@@ -74,6 +77,11 @@ function main(sb3,callback){
       dl.href = url;
       dl.textContent = "Save!";
       dl.className = "btn";
+      callback({ result: {
+        url,
+        size: sb3Blob.size,
+        ratio: Math.round(10000 - sb3Blob.size / parseInt(document.getElementById("raw-size").textContent) * 10000) /100,
+      }})
       document.getElementById("download").append(dl);
     })
     .then(resolve)
