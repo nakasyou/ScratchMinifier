@@ -1,2 +1,3 @@
-# ScratchMinifyer
-Scratch project file(.sb3) minifyer
+# ScratchMinifier
+Scratch project file(.sb3) minifier
+
